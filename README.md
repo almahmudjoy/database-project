@@ -68,7 +68,7 @@ All interaction happens through a text-based menu in the terminal — there is n
 ### Admin Features
 - View the complete user list (`View All Users`)
 - View every blog from every user (`View All Blogs`, admin view)
-- Search any blog in the system by ID
+- Search any blog in the system by ID or title (case-insensitive)
 - Update any user's `isActive` status (activate/deactivate)
 - Delete any user (their blogs are removed first to preserve referential integrity)
 - Delete any blog regardless of owner
@@ -259,6 +259,14 @@ This runs `node src/app.js`, which on startup:
 ## 🧑 User Journey
 
 ```
+===== MAIN MENU =====
+1. View All Blogs
+2. Login
+3. Register
+4. Exit
+```
+
+```
 Register
    ↓
 Login
@@ -266,13 +274,13 @@ Login
 Blogs auto-displayed
   ("No blogs are found" OR list of blog titles)
    ↓
-USER MENU
-  1. View My Blogs
-  2. Create Blog
-  3. Search Blog
-  4. Update Blog
-  5. Delete Blog
-  6. Logout
+===== USER MENU =====
+1. View Your Blogs
+2. Search Blog by ID/Title
+3. Create Blog
+4. Update Blog
+5. Delete Blog
+6. Logout
    ↓
 Logout → back to MAIN MENU
 ```
@@ -292,7 +300,7 @@ Key console messages:
 ## 📰 Reader Journey
 
 - **No login required.**
-- From the **Main Menu**, select `3. View All Blogs` — this calls `allBlog()`.
+- From the **Main Menu**, select `1. View All Blogs` — this calls `allBlog()`.
 - Every blog from every user is displayed, including the author's name.
 - If the `blogs` table is empty, it prints `No blogs are found` instead of erroring.
 
@@ -307,7 +315,7 @@ An admin logs in through the same Login flow; the app routes to the **Admin Menu
 1. View All Users
 2. View All Blogs
 3. Search Blog by ID/Title
-4. Update User Active Status
+4. Update User
 5. Delete User
 6. Delete Blog
 7. Logout
@@ -316,7 +324,7 @@ An admin logs in through the same Login flow; the app routes to the **Admin Menu
 - **View All Users** → `allUsers()` — lists every user (safe fields only, no password).
 - **View All Blogs** → `allUsersBlog()` — lists every blog with author info.
 - **Search Blog by ID/Title** → `searchAnyBlog()` — accepts a blog ID or a case-insensitive title match, searches the entire table, not scoped to one user.
-- **Update User Active Status** → `updateUserStatus()` — sets a target user's `isActive` to true/false (their `role` is never touched by this operation).
+- **Update User** → `updateUserStatus()` — sets a target user's `isActive` to true/false (their `role` is never touched by this operation).
 - **Delete User** → `deleteUser()` — deletes the user's blogs first, then the user, to avoid orphaned rows / FK violations.
 - **Delete Blog** → `deleteAnyBlog()` — deletes any blog regardless of owner.
 - **Logout** → clears session, returns to the Main Menu.
@@ -372,14 +380,14 @@ All three journeys were manually tested end-to-end against a real local MySQL `b
 - Login with an incorrect password
 - Deactivated-user login blocked with the exact `User is deactivated` message
 - Creating multiple blogs under one user
-- Searching a blog by title (case-insensitive) and by exact ID
+- Searching own blogs by exact ID, exact title, partial title, and case-insensitive title
 - Updating own blog (partial update, leaving fields unchanged)
 - Deleting own blog
 - Authorization check: a user attempting to update/delete another user's blog is correctly rejected
 - Reader viewing all blogs without logging in, including an empty-database case
 - Admin listing all users
 - Admin listing all blogs with author info
-- Admin searching a blog by ID (found and not-found cases)
+- Admin searching a blog by ID and by case-insensitive title (found and not-found cases)
 - Admin deactivating and reactivating a user, confirmed via a full login retry cycle
 - Admin deleting a blog
 - Admin deleting a user together with that user's blogs, confirmed no orphaned rows remained
@@ -411,13 +419,13 @@ node_modules
 
 ## 📤 GitHub Submission
 
+Repository: [github.com/almahmudjoy/database-project](https://github.com/almahmudjoy/database-project)
+
 ```bash
 git add .
-git commit -m "Add Blog Database Management System (Assignment 4)"
+git commit -m "Your commit message"
 git push
 ```
-
-*(Commits are made locally in the `Assignment 4` folder. Add a GitHub remote and run `git push` once ready to submit.)*
 
 ---
 
@@ -425,8 +433,8 @@ git push
 
 **Abdullah Al Mahmud Joy**
 
-- Full Stack SDET — Road to SDET, Batch 19
+- Full Stack SDET — Road to SDET
 - M.Sc. in Computer Science & Engineering, Military Institute of Science and Technology (MIST)
 - B.Sc. in Computer Science & Engineering, Bangladesh University of Business and Technology (BUBT)
 - **GitHub:** [github.com/almahmudjoy](https://github.com/almahmudjoy)
-- **LinkedIn:** [linkedin.com/in/abdullah-al-mahmud-joy](https://www.linkedin.com/in/abdullah-al-mahmud-joy/)
+- **LinkedIn:** [linkedin.com/in/abdullah-al-mahmud-joy](https://linkedin.com/in/abdullah-al-mahmud-joy/)

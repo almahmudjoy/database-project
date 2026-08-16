@@ -39,9 +39,9 @@ async function ensureDatabaseExists() {
 async function showUserMenu(prompt) {
     while (true) {
         console.log('\n===== USER MENU =====');
-        console.log('1. View My Blogs');
-        console.log('2. Create Blog');
-        console.log('3. Search Blog');
+        console.log('1. View Your Blogs');
+        console.log('2. Search Blog by ID/Title');
+        console.log('3. Create Blog');
         console.log('4. Update Blog');
         console.log('5. Delete Blog');
         console.log('6. Logout');
@@ -51,9 +51,9 @@ async function showUserMenu(prompt) {
         if (choice === '1') {
             await showUserBlogs();
         } else if (choice === '2') {
-            await createBlogPrompt(prompt);
-        } else if (choice === '3') {
             await searchBlogPrompt(prompt);
+        } else if (choice === '3') {
+            await createBlogPrompt(prompt);
         } else if (choice === '4') {
             await updateBlogPrompt(prompt);
         } else if (choice === '5') {
@@ -74,7 +74,7 @@ async function showAdminMenu(prompt) {
         console.log('1. View All Users');
         console.log('2. View All Blogs');
         console.log('3. Search Blog by ID/Title');
-        console.log('4. Update User Active Status');
+        console.log('4. Update User');
         console.log('5. Delete User');
         console.log('6. Delete Blog');
         console.log('7. Logout');
@@ -106,15 +106,15 @@ async function showAdminMenu(prompt) {
 async function showMenu(prompt) {
     while (true) {
         console.log('\n===== MAIN MENU =====');
-        console.log('1. Register');
+        console.log('1. View All Blogs');
         console.log('2. Login');
-        console.log('3. View All Blogs');
+        console.log('3. Register');
         console.log('4. Exit');
 
         const choice = (await prompt.ask('Select an option: ')).trim();
 
         if (choice === '1') {
-            await register(prompt);
+            await allBlogPrompt();
         } else if (choice === '2') {
             const loggedIn = await login(prompt);
             if (loggedIn) {
@@ -127,7 +127,7 @@ async function showMenu(prompt) {
                 }
             }
         } else if (choice === '3') {
-            await allBlogPrompt();
+            await register(prompt);
         } else if (choice === '4') {
             break;
         } else {
