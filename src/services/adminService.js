@@ -1,3 +1,4 @@
+const { Op, fn, col, where } = require('sequelize');
 const { getCurrentUser } = require('./session');
 const { User, Blog } = require('../models');
 
@@ -27,12 +28,31 @@ async function allUsersBlog() {
     });
 }
 
-async function searchAnyBlogById(id) {
+async function searchAnyBlog({ id, title }) {
     requireAdmin();
-    return Blog.findOne({
-        where: { id },
-        include: [{ model: User, attributes: SAFE_AUTHOR_ATTRIBUTES }],
-    });
+
+    if (id !== undefined) {
+        const blog = await Blog.findOne({
+            where: { id },
+            include: [{ model: User, attributes: SAFE_AUTHOR_ATTRIBUTES }],
+        });
+        return blog ? [blog] : [];
+    }
+
+    if (title) {
+        return Blog.findAll({
+            where: {
+                [Op.and]: [
+                    where(fn('LOWER', col('blogTitle')), {
+                        [Op.like]: `%${title.toLowerCase()}%`,
+                    }),
+                ],
+            },
+            include: [{ model: User, attributes: SAFE_AUTHOR_ATTRIBUTES }],
+        });
+    }
+
+    return [];
 }
 
 async function updateUserStatus(userId, isActive) {
@@ -72,7 +92,7 @@ async function deleteAnyBlog(blogId) {
 module.exports = {
     allUsers,
     allUsersBlog,
-    searchAnyBlogById,
+    searchAnyBlog,
     updateUserStatus,
     deleteUser,
     deleteAnyBlog,

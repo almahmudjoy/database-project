@@ -73,7 +73,7 @@ async function showAdminMenu(prompt) {
         console.log('\n===== ADMIN MENU =====');
         console.log('1. View All Users');
         console.log('2. View All Blogs');
-        console.log('3. Search Blog By ID');
+        console.log('3. Search Blog by ID/Title');
         console.log('4. Update User Active Status');
         console.log('5. Delete User');
         console.log('6. Delete Blog');

@@ -306,7 +306,7 @@ An admin logs in through the same Login flow; the app routes to the **Admin Menu
 ===== ADMIN MENU =====
 1. View All Users
 2. View All Blogs
-3. Search Blog By ID
+3. Search Blog by ID/Title
 4. Update User Active Status
 5. Delete User
 6. Delete Blog
@@ -315,7 +315,7 @@ An admin logs in through the same Login flow; the app routes to the **Admin Menu
 
 - **View All Users** → `allUsers()` — lists every user (safe fields only, no password).
 - **View All Blogs** → `allUsersBlog()` — lists every blog with author info.
-- **Search Blog By ID** → `searchAnyBlogById()` — searches the entire table, not scoped to one user.
+- **Search Blog by ID/Title** → `searchAnyBlog()` — accepts a blog ID or a case-insensitive title match, searches the entire table, not scoped to one user.
 - **Update User Active Status** → `updateUserStatus()` — sets a target user's `isActive` to true/false (their `role` is never touched by this operation).
 - **Delete User** → `deleteUser()` — deletes the user's blogs first, then the user, to avoid orphaned rows / FK violations.
 - **Delete Blog** → `deleteAnyBlog()` — deletes any blog regardless of owner.
@@ -356,7 +356,7 @@ Reactivating (`isActive = true`) restores normal login.
 | `allBlog()` | `services/blogService.js` | Reader journey — lists every blog with author info, no login required |
 | `allUsers()` | `services/adminService.js` | Admin — lists every user (safe fields only) |
 | `allUsersBlog()` | `services/adminService.js` | Admin — lists every blog with author info |
-| `searchAnyBlogById()` | `services/adminService.js` | Admin — finds any blog by ID, unrestricted by owner |
+| `searchAnyBlog()` | `services/adminService.js` | Admin — finds any blog by ID or case-insensitive title, unrestricted by owner |
 | `updateUserStatus()` | `services/adminService.js` | Admin — toggles a user's `isActive` flag only |
 | `deleteUser()` | `services/adminService.js` | Admin — removes a user's blogs, then the user |
 | `deleteAnyBlog()` | `services/adminService.js` | Admin — deletes any blog regardless of owner |

@@ -1,7 +1,7 @@
 const {
     allUsers,
     allUsersBlog,
-    searchAnyBlogById,
+    searchAnyBlog,
     updateUserStatus,
     deleteUser,
     deleteAnyBlog,
@@ -60,16 +60,22 @@ async function viewAllUsersBlogPrompt() {
 }
 
 async function searchAnyBlogPrompt(prompt) {
-    const id = Number((await prompt.ask('Blog ID: ')).trim());
+    const query = (await prompt.ask('Search by Blog ID or Title: ')).trim();
 
     try {
-        const blog = await searchAnyBlogById(id);
-        if (!blog) {
+        const results = /^\d+$/.test(query)
+            ? await searchAnyBlog({ id: Number(query) })
+            : await searchAnyBlog({ title: query });
+
+        if (results.length === 0) {
             console.log('Blog not found');
             return;
         }
 
-        printBlogWithAuthor(blog);
+        results.forEach((blog) => {
+            console.log('---');
+            printBlogWithAuthor(blog);
+        });
     } catch (error) {
         console.log(error.message);
     }
