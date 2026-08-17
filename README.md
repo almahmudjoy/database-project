@@ -400,7 +400,7 @@ All three journeys were manually tested end-to-end against a real local MySQL `b
 
 The complete project demonstration is available below:
 
-[▶️ Watch the Full Demo Video on YouTube](https://www.youtube.com/watch?v=Idr-ggrFDZQ)
+[▶️ Watch the Full Demo Video on YouTube](https://youtu.be/yEAQjIs2IEs)
 
 The video demonstrates the complete User Journey, Reader Journey, and Admin Journey with Bangla voice explanation.
 
